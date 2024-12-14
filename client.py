@@ -3,9 +3,8 @@ import io
 import base64
 import requests
 
-url = 'http://localhost:5000/post'
+url = 'http://49.234.52.237:5000/post'
 files = {'file': open('process/darkFace.png', 'rb')}
-# files = {'file': open('origin.jpg', 'rb')}
 response = requests.post(url, files=files)
 
 try:
