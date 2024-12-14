@@ -26,6 +26,9 @@ def BGR_Hist_Equalization(target):
 
     return target
 
+def invoke(img):
+    return BGR_Hist_Equalization(img)
+
 if __name__=="__main__":
     img_file=r"./darkFace.png"
 

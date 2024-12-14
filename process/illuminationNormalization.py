@@ -27,6 +27,7 @@ def BGR_Hist_Equalization(target):
     return target
 
 def MSRCR(img, scales=[15, 80, 250], sigma=125, G=192, b=30, alpha=125, beta=-46):
+    img = BGR_Hist_Equalization(img)
     img = img.astype(np.float32) + 1.0
     retinex = np.zeros_like(img)
     for scale in scales:
@@ -43,6 +44,11 @@ def MSRCR(img, scales=[15, 80, 250], sigma=125, G=192, b=30, alpha=125, beta=-46
     img = (img - np.min(img)) / (np.max(img) - np.min(img)) * 255.0
     img = np.clip(img, 0, 255).astype(np.uint8)
     
+    return img
+
+def invoke(img):
+    img = BGR_Hist_Equalization(img)
+    img = MSRCR(img)
     return img
 
 if __name__ == '__main__':

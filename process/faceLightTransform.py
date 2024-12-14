@@ -46,6 +46,7 @@ def face_illumination_transfer(target=None, reference=None):
     :param reference:
     :return:
     '''
+    original_size = target.shape[:2]  # 保存原始图像尺寸
     h,w=reference.shape[:2]
     target=cv2.resize(target,(w,h))
 
@@ -73,7 +74,22 @@ def face_illumination_transfer(target=None, reference=None):
     res=cv2.merge((out,a,b))
     res=cv2.cvtColor(res,cv2.COLOR_Lab2BGR)
 
-    return res
+    # 调整处理后的图像尺寸与原始图像一致
+    result_img_resized = cv2.resize(res, (original_size[1], original_size[0]))
+
+    return result_img_resized
+
+def invoke(img):
+    # 读取模板图片
+    reference=r"process/lightFace.png"
+    rimg=cv2.imread(reference)
+
+    if rimg is None:
+        raise FileNotFoundError(f"Reference image not found at path: {reference}")
+    elif img is None:
+        raise ValueError("Image is None")
+
+    return face_illumination_transfer(img,rimg)
 
 if __name__=="__main__":
     img_file=r"./darkFace.png"
